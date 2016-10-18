@@ -19,7 +19,7 @@
     </g:if>
 
     <div class="col-md-6">
-        <g:form id="searchForm" controller="main" action="searchRestaurant">
+        <g:form controller="main" action="searchRestaurant">
             <div class="input-group">
             <input id="searchName" name="searchName" required="required" type="text" class="form-control" placeholder="Restaurant name:">
             <span class="input-group-btn">
@@ -28,7 +28,7 @@
             </div>
         </g:form>
 
-        <table class="table table-bordered">
+        <table>
             <thead>
             <tr>
                 <th>Name</th>
@@ -38,9 +38,11 @@
             </thead>
             <tbody>
             <g:each in="${restaurantList}">
+                <tr>
                 <td>${it.name}</td>
                 <td>${it.zomatoId}</td>
                 <td><g:link controller="main" action="restaurant" id="${it.zomatoId}"><button type="button" class="btn btn-success">View Lunch Menu</button></g:link></td>
+                </tr>
             </g:each>
             </tbody>
         </table>

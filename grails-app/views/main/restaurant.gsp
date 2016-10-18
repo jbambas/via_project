@@ -10,6 +10,10 @@
     <g:if test="${exception!=null}">
         <p>${exception.message}</p>
     </g:if>
+    <g:if test="${data==[]}">
+        <p>This restaurant has no daily menu today.</p>
+    </g:if>
+
     <g:each in="${data}" var="item">
         <g:each in="${item}">
             <p>${it.dish.name}  ${it.dish.price}</p>

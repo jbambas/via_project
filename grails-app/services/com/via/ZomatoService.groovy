@@ -16,8 +16,16 @@ class ZomatoService {
         return data.body
     }
 
-    static def searchRestaurant(String name){
-        def data = new RestBuilder().get(url+"search?q="+name){
+    static def searchRestaurant(String name, int pageNumber){
+        def data = new RestBuilder().get(url+"search?entity_id=84&entity_type=city&q="+name+"&start="+(pageNumber*20)+"&sort=rating"){
+            header 'user-key', '4823d8ca1a0a9068fcd3794b0daa8ea6'
+            accept "application/json"
+        }
+        return data.body
+    }
+
+    static def getRestaurantDetails(int id){
+        def data = new RestBuilder().get(url+"restaurant?res_id="+id){
             header 'user-key', '4823d8ca1a0a9068fcd3794b0daa8ea6'
             accept "application/json"
         }
