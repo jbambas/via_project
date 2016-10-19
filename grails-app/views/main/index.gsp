@@ -49,7 +49,7 @@
     </div>
 
     <div class="col-md-6">
-        //todo giphy
+        <img src=${gifURL} alt="Giphy_image">
     </div>
 
 </div>

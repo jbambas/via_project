@@ -10,7 +10,7 @@ class ZomatoService {
     static final String url = "https://developers.zomato.com/api/v2.1/"
     static def getDailyMenu(int res_id) {
         def data = new RestBuilder().get(url+"dailymenu?res_id="+res_id){
-            header 'user-key', '4823d8ca1a0a9068fcd3794b0daa8ea6'
+            header 'user-key', APIKEY
             accept "application/json"
         }
         return data.body
@@ -18,7 +18,7 @@ class ZomatoService {
 
     static def searchRestaurant(String name, int pageNumber){
         def data = new RestBuilder().get(url+"search?entity_id=84&entity_type=city&q="+name+"&start="+(pageNumber*20)+"&sort=rating"){
-            header 'user-key', '4823d8ca1a0a9068fcd3794b0daa8ea6'
+            header 'user-key', APIKEY
             accept "application/json"
         }
         return data.body
@@ -26,7 +26,7 @@ class ZomatoService {
 
     static def getRestaurantDetails(int id){
         def data = new RestBuilder().get(url+"restaurant?res_id="+id){
-            header 'user-key', '4823d8ca1a0a9068fcd3794b0daa8ea6'
+            header 'user-key', APIKEY
             accept "application/json"
         }
         return data.body

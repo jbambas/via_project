@@ -12,8 +12,8 @@
     </g:if>
     <g:else>
     <div class="col-md-6">
-        <p>Nalezeno restauraci: ${restaurantList.results_found}</p>
-        <p>Zobrazeno ${restaurantList.results_start} - ${(restaurantList.results_start as Integer) + (restaurantList.results_shown as Integer)}</p>
+        <p>Restaurants found: ${restaurantList.results_found}</p>
+        <p>Shown ${restaurantList.results_start} - ${(restaurantList.results_start as Integer) + (restaurantList.results_shown as Integer)}</p>
     </div>
         <div class="col-md-6 top-buffer">
             <g:link controller="main" action="index"><button class="btn btn-success col-lg-offset-8">Back</button></g:link>
@@ -21,10 +21,10 @@
     <table>
         <thead>
             <tr>
-                <th>Název restaurace</th>
-                <th>Hodnocení</th>
-                <th>Adresa</th>
-                <th>Přidat do seznamu</th>
+                <th>Restaurant name</th>
+                <th>Rating</th>
+                <th>Address</th>
+                <th>Add to the list</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +35,7 @@
                     <td>${it.restaurant.location.address}</td>
                     <td>
                         <g:link controller="main" action="addRestaurant" params="[id:it.restaurant.id]">
-                            <button class="btn btn-success">Přidat do seznamu</button>
+                            <button class="btn btn-success">Add to the list</button>
                         </g:link>
                     </td>
                 </tr>

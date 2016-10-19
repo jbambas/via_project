@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Restaurant</title>
+    <title>Restaurant ${restaurantData.name}</title>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 </head>
 <body>
 <div class="container">
+    <div class="col-md-6">
+    <h1>Restaurant ${restaurantData.name}</h1>
     <g:if test="${exception!=null}">
         <p>${exception.message}</p>
     </g:if>
@@ -14,11 +16,33 @@
         <p>This restaurant has no daily menu today.</p>
     </g:if>
 
-    <g:each in="${data}" var="item">
-        <g:each in="${item}">
-            <p>${it.dish.name}  ${it.dish.price}</p>
+    <ul class="list-group">
+        <g:each in="${data}" var="item">
+            <g:each in="${item}">
+                <li class="list-group-item">${it.dish.name}  ${it.dish.price}</li>
+            </g:each>
         </g:each>
-    </g:each>
+    </ul>
+    </div>
+
+    <div class="col-md-6">
+        <h3>${restaurantData.location.address}</h3>
+        <div id="map"></div>
+        <script>
+            function initMap() {
+                var restaurant = {lat: ${restaurantData.location.latitude}, lng: ${restaurantData.location.longitude}};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: restaurant
+                });
+                var marker = new google.maps.Marker({
+                    position: restaurant,
+                    map: map
+                });
+            }
+        </script>
+
+    </div>
 </div>
 </body>
 </html>

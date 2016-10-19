@@ -13,3 +13,10 @@
 *= require mobile
 *= require_self
 */
+
+.top-buffer { margin-top:10px; }
+#map {
+    height: 400px;
+    width: 100%;
+}
+
