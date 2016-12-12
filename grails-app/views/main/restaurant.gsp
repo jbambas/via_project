@@ -26,7 +26,7 @@
     </div>
 
     <div class="col-md-6">
-        <h3>${restaurantData.location.address}</h3>
+        <h3>${restaurantData.location.address} - Distance from inserted address: <g:if test="${distance == null}">----</g:if><g:else>${(double)Math.round(distance*10)/10}</g:else>km</h3>
         <div id="map"></div>
         <script>
             function initMap() {
@@ -44,5 +44,8 @@
 
     </div>
 </div>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWK_cycbhsfuLn4nzHcDo5NkSgBTUEDKU&callback=initMap">
+</script>
 </body>
 </html>

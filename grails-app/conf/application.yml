@@ -73,14 +73,9 @@ endpoints:
 ---
 grails:
     mime:
-        disable:
-            accept:
-                header:
-                    userAgents:
-                        - Gecko
-                        - WebKit
-                        - Presto
-                        - Trident
+        use:
+          accept:
+            header: true
         types:
             all: '*/*'
             atom: application/atom+xml

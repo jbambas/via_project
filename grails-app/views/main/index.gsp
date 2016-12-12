@@ -11,6 +11,11 @@
 
 </head>
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        <li><g:link class="create" controller="restaurant" action="index">Manage restaurants</g:link></li>
+    </ul>
+</div>
 
 <div id="list-restaurant" class="content scaffold-list" role="main">
     <h1><g:message code="default.list.label" args="[entityName]" /></h1>
@@ -21,7 +26,7 @@
     <div class="col-md-6">
         <g:form controller="main" action="searchRestaurant">
             <div class="input-group">
-            <input id="searchName" name="searchName" required="required" type="text" class="form-control" placeholder="Restaurant name:">
+            <input id="searchName" name="searchName" required="required" type="text" class="form-control" placeholder="Search restaurant on Zomato:">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">Search</button>
             </span>
@@ -49,10 +54,59 @@
     </div>
 
     <div class="col-md-6">
-        <img src=${gifURL} alt="Giphy_image">
+        <div class="col-lg-offset-3" id="locationDiv">
+        </div>
     </div>
 
 </div>
 
+<script type="text/javascript">
+    window.onload = function () {
+        if(getCookie('address')==""){
+            renderForm();
+        } else {
+            viewAddress();
+        }
+    }
+    function renderForm() {
+        $('#locationDiv').empty();
+        $('#locationDiv').append('<h3>Put your location - address.</h3>');
+        $('#locationDiv').append('<input id="street" required="required" type="text" class="form-control" placeholder="Street">');
+        $('#locationDiv').append('<button onclick="saveAddress()">Set location</button>');
+    }
+    function viewAddress() {
+        $('#locationDiv').empty();
+        var address = getCookie("address");
+        $('#locationDiv').append('<h3>Inserted address:</h3>');
+        $('#locationDiv').append('<p>'+decodeURI(address)+'</p>');
+        $('#locationDiv').append('<button onclick="renderForm()">Edit location</button>')
+    }
+    function saveAddress(){
+        var address = encodeURI($('#street').val());
+        setCookie("address", address.split(' ').join('+'));
+        $('#locationDiv').empty();
+        viewAddress();
+    }
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    }
+</script>
 </body>
 </html>

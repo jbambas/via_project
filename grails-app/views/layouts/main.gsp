@@ -47,8 +47,6 @@
 
     <asset:javascript src="application.js"/>
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWK_cycbhsfuLn4nzHcDo5NkSgBTUEDKU&callback=initMap">
-</script>
+
 </body>
 </html>
