@@ -1,5 +1,6 @@
 package semester_project
 
+import com.via.GoogleService
 import com.via.RestaurantService
 import com.via.ZomatoService
 import grails.converters.JSON
@@ -14,60 +15,86 @@ class RestController {
                                 getLaunchMenu:'GET',
                                 getRestaurantsByName:'GET']
 
-    def addRestaurant(){//pridat do databaze....metoda post
+    def addRestaurant(){
         def name = params.name
-        def zomatoID = params.zomatoID
-        if (RestaurantService.findByZomatoID(zomatoID) == null){
-            render(status: 201, text: zomatoID)
-        } else if (name != null && zomatoID != null) {
+        def zomatoID = params.id
+        if (RestaurantService.findByZomatoID(Integer.parseInt(zomatoID)) == null){
             RestaurantService.saveRestaurant(name, zomatoID)
-            render(status: 201, text: zomatoID)
+            render(status: 201, text: new JSONObject().put("id", zomatoID))
+        } else if (name != null && zomatoID != null) {
+            render(status: 201, text: new JSONObject().put("id", zomatoID))
         } else {
             render(status: 500, text: "No parameters sent.")
         }
     }
-    def updateRestaurantName(){ //update jmena v databazi...metoda put
+    def updateRestaurantName(){
         def id = params.id
         def name = params.name
-        Restaurant rest = RestaurantService.findByZomatoID(Integer.parseInt(id));
-        rest?.name = name;
-        rest?.save()
-        render(status: 200)
+        if(id == null)render (status: 404)
+        Restaurant rest = RestaurantService.findByZomatoID(Integer.parseInt(id))
+        if (rest == null){
+            rest = new Restaurant(name: name, zomatoId: id)
+        }
+        rest.name = name
+        rest.save()
+        render(status: 200, text: new JSONObject().put("id", id))
     }
     def deleteRestaurantById(){ //odstraneni z databaze...metoda delete
-        Restaurant rest = RestaurantService.findByZomatoID(params.id)
+        if(params.id == null) render(status: 204)
+        Restaurant rest = RestaurantService.findByZomatoID(Integer.parseInt(params.id))
         rest?.delete()
         render(status: 204)
     }
-    def getRestaurants(){//ziskani vsech zaznamu v databazi...metoda get
+    def getRestaurants(){
         def data = RestaurantService.getRestaurants()
         render data as JSON
     }
     ///////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////
 
-    def getRestaurantByZomatoID(){//metoda get
+    def getRestaurantByZomatoID(){
         def id = params.id
-        def data =  ZomatoService.getRestaurantDetails(Integer.parseInt(id))
-        def json = new JSONObject()
-        json.put("id", JSON.parse(data).id)
-        json.put("name", JSON.parse(data).name)
-        json.put("location", JSON.parse(data).location)
-
-        render json as JSON
+        try {
+            def data =  ZomatoService.getRestaurantDetails(Integer.parseInt(id))
+            def json = new JSONObject()
+            json.put("id", JSON.parse(data).id)
+            json.put("name", JSON.parse(data).name)
+            json.put("location", JSON.parse(data).location)
+            if(params.address != null){
+                def location = GoogleService.getLocation(params.address)
+                if(location != null){
+                    json.put("distance", GoogleService.getDistance(location.lat, location.lon,
+                            Double.parseDouble(JSON.parse(data).location.latitude),
+                            Double.parseDouble(JSON.parse(data).location.longitude), "K"))
+                } else json.put("distance", "Inserted_address_not_found")
+            } else {
+                json.put("distance", "---")
+            }
+            render json as JSON
+        } catch (Exception e){
+            render (status: 404)
+            return
+        }
     }
-    def getLaunchMenu(){//metoda get
+    def getLaunchMenu(){
         if(params.id != null){
-            JSONObject json = new JSONObject(ZomatoService.getDailyMenu(Integer.parseInt(params.id)))
-            if("success".equals(json.status))
-                render json as JSON
-            else render(status: 400)
+            try {
+                JSONObject json = new JSONObject(ZomatoService.getDailyMenu(Integer.parseInt(params.id)))
+                if("success".equals(json.status))
+                    render json as JSON
+                else {
+                    JSONObject object = new JSONObject()
+                    object.put("status", "success")
+                    object.put("daily_menus", [])
+                    render object as JSON
+                }
+            } catch (Exception e) {render (status: 404)}
         } else render(status: 404)
     }
 
-    def getRestaurantsByName(){//metoda get
-        if(request.getHeader("name") != null){
-            JSONObject json = new JSONObject(ZomatoService.searchAllRestaurant(request.getHeader("name")))
+    def getRestaurantsByName(){
+        if(params.name != null){
+            JSONObject json = new JSONObject(ZomatoService.searchAllRestaurant(params.name))
             def data = json.restaurants?.collect{ rest-> [id:rest.restaurant.id, name:rest.restaurant.name, location:rest.restaurant.location] }
             render data as JSON
         } else render(status: 400, text: 'No restaurant name for search sent.')

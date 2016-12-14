@@ -15,7 +15,7 @@ class GoogleService {
             data = new JSONObject(data)
             if("OK".equals(data.status)){
                 return [lat: data.results[0].geometry.location.lat, lon:data.results[0].geometry.location.lng]
-            } else return null;
+            } else return null
         } else return null
     }
 
