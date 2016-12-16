@@ -17,7 +17,9 @@ class MainController {
         if(params.id != null && RestaurantService.findByZomatoID(Integer.parseInt(params.id)) != null){
             def data = ZomatoService.getDailyMenu(Integer.parseInt(params.id))
             def restaurantData = ZomatoService.getRestaurantDetails(Integer.parseInt(params.id))
-            def coordination = GoogleService.getLocation(java.net.URLDecoder.decode(request.cookies.find {it.name=='address'}?.value))
+            def coordination = null
+            if(request.cookies.find {it.name=='address'}?.value != null)
+                coordination = GoogleService.getLocation(java.net.URLDecoder.decode(request.cookies.find {it.name=='address'}?.value))
             def lat = Double.parseDouble(new JSONObject(restaurantData).location.latitude)
             def lon = Double.parseDouble(new JSONObject(restaurantData).location.longitude)
             def distance = null

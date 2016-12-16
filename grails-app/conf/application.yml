@@ -13,8 +13,6 @@ dataSource:
     #dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
     driverClassName: com.mysql.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    username: root
-    password:
 
 environments:
     development:
@@ -22,6 +20,8 @@ environments:
             dbCreate: update
             #url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
             url: jdbc:mysql://localhost:3306/via
+            username: root
+            password:
             properties:
               jmxEnabled: true
               initialSize: 5
@@ -44,10 +44,14 @@ environments:
         dataSource:
             dbCreate: update
             url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            username: root
+            password:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:sqlite:semester_project/WEB-INF/test.db
+            url: '${System.env.DATABASE_URL}'
+            username:
+            password:
             properties:
               jmxEnabled: true
               initialSize: 5

@@ -1,0 +1,6 @@
+applications:
+- name: semester_project
+  memory: 1G
+  path: build/libs/semester_project-0.1.war
+  services:
+    - mysql_bambaja2
