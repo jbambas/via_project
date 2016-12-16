@@ -19,6 +19,24 @@ environments:
         dataSource:
             dbCreate: update
             url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            properties:
+              jmxEnabled: true
+              initialSize: 5
+              maxActive: 50
+              minIdle: 5
+              maxIdle: 25
+              maxWait: 10000
+              maxAge: 600000
+              timeBetweenEvictionRunsMillis: 5000
+              minEvictableIdleTimeMillis: 60000
+              validationQuery: SELECT 1
+              validationQueryTimeout: 3
+              validationInterval: 15000
+              testOnBorrow: true
+              testWhileIdle: true
+              testOnReturn: false
+              jdbcInterceptors: ConnectionState
+              defaultTransactionIsolation: 1
     test:
         dataSource:
             dbCreate: update
@@ -26,7 +44,25 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            url: jdbc:sqlite:${catalina.base}/webapps/semester_project-0.1/WEB-INF/test.db
+            properties:
+              jmxEnabled: true
+              initialSize: 5
+              maxActive: 50
+              minIdle: 5
+              maxIdle: 25
+              maxWait: 10000
+              maxAge: 600000
+              timeBetweenEvictionRunsMillis: 5000
+              minEvictableIdleTimeMillis: 60000
+              validationQuery: SELECT 1
+              validationQueryTimeout: 3
+              validationInterval: 15000
+              testOnBorrow: true
+              testWhileIdle: true
+              testOnReturn: false
+              jdbcInterceptors: ConnectionState
+              defaultTransactionIsolation: 1
 
 ---
 ---

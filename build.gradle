@@ -69,3 +69,10 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+
+war {
+    from('C:\\Users\\jbamb\\OneDrive\\Škola\\magistr\\3.semestr\\VIA\\semester_project\\grails-app\\database') {
+        include 'test.db'
+        into 'WEB-INF'
+    }
+}
