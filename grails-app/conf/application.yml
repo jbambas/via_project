@@ -9,16 +9,19 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.sqlite.JDBC
-    dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
-    username:
+    #driverClassName: org.sqlite.JDBC
+    #dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
+    driverClassName: com.mysql.jdbc.Driver
+    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    username: root
     password:
 
 environments:
     development:
         dataSource:
             dbCreate: update
-            url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            #url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            url: jdbc:mysql://localhost:3306/via
             properties:
               jmxEnabled: true
               initialSize: 5
@@ -44,7 +47,7 @@ environments:
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:sqlite:${catalina.base}/webapps/semester_project-0.1/WEB-INF/test.db
+            url: jdbc:sqlite:semester_project/WEB-INF/test.db
             properties:
               jmxEnabled: true
               initialSize: 5
