@@ -14,6 +14,7 @@
 <div class="nav" role="navigation">
     <ul>
         <li><g:link class="create" controller="restaurant" action="index">Manage restaurants</g:link></li>
+        <li><a href="${g.resource(file:'index.html')}">Swagger API documentation</a></li>
     </ul>
 </div>
 

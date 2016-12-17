@@ -9,18 +9,15 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    #driverClassName: org.sqlite.JDBC
-    #dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
-    driverClassName: com.mysql.jdbc.Driver
-    dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 environments:
     development:
         dataSource:
+            driverClassName: org.sqlite.JDBC
+            dialect: com.enigmabridge.hibernate.dialect.SQLiteDialect
             dbCreate: update
-            #url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
-            url: jdbc:mysql://localhost:3306/via
-            username: root
+            url: jdbc:sqlite:C:/Users/jbamb/OneDrive/Škola/magistr/3.semestr/VIA/semester_project/grails-app/database/test.db
+            username:
             password:
             properties:
               jmxEnabled: true
@@ -48,6 +45,8 @@ environments:
             password:
     production:
         dataSource:
+            driverClassName: com.mysql.jdbc.Driver
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
             dbCreate: update
             url: '${System.env.DATABASE_URL}'
             username:
