@@ -6,7 +6,7 @@ info:
   description: Description of Lunch menu viewer. This app is developed for credits in subject VIA.
   version: "1.0"
 # the domain of the service
-host: semester-project.cftest.homeatcloud.cz
+host: localhost:8080
 # array of all schemes that your API supports
 schemes:
   - http
