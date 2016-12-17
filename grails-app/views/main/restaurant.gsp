@@ -27,7 +27,7 @@
 
     <div class="col-md-6">
         <h3>${restaurantData.location.address} - Distance from inserted address: <g:if test="${distance == null}">----</g:if><g:else>${(double)Math.round(distance*10)/10}</g:else>km</h3>
-        <div id="map"></div>
+        <div id="map" style="height: 400px; width: 100%"></div>
         <script type="text/javascript">
             function initMap() {
                 var restaurant = {lat: ${restaurantData.location.latitude}, lng: ${restaurantData.location.longitude}};

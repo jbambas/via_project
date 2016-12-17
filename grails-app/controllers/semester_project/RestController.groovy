@@ -80,12 +80,17 @@ class RestController {
         if(params.id != null){
             try {
                 JSONObject json = new JSONObject(ZomatoService.getDailyMenu(Integer.parseInt(params.id)))
-                if("success".equals(json.status))
-                    render json as JSON
-                else {
+                if("success".equals(json.status)) {
+                    def menus = (json.daily_menus.collect {
+                        it.daily_menu.dishes.collect { wrapper -> [price: wrapper.dish.price, name: wrapper.dish.name] }
+                    })
+                    def list = new ArrayList()
+                    menus.each {dish -> list.addAll(dish)}
+                    render new JSONObject().put("status", "success").put("dishes", list) as JSON
+                } else {
                     JSONObject object = new JSONObject()
                     object.put("status", "success")
-                    object.put("daily_menus", [])
+                    object.put("dishes", [])
                     render object as JSON
                 }
             } catch (Exception e) {render (status: 404)}

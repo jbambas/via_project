@@ -1,0 +1,285 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Lunch menu viewer API
+  description: Description of Lunch menu viewer. This app is developed for credits in subject VIA.
+  version: "1.0"
+# the domain of the service
+host: semester-project.cftest.homeatcloud.cz
+# array of all schemes that your API supports
+schemes:
+  - http
+# will be prefixed to all paths
+basePath: /api
+produces:
+  - application/json
+paths:
+  /restaurant:
+    get:
+      description: The restaurant endpoint returns names and zomato id's of all saved restauration in database.
+      responses:
+        200:
+          description: An array of restaurants
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Restaurant'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /restaurantdetail:
+    get:
+      description: The restaurant detail endpoint returns detail information about restauration - by Zomato ID. Restaurant need not be stored in the database.
+      parameters:
+        - name: id
+          in: query
+          type: integer
+          description: Zomato id for find restaurant details
+          required: true
+        - name: address
+          in: query
+          type: string
+          description: Users address for compute distance between user and restaurant location.
+          required: false
+      responses:
+        200:
+          description: Detail information about restaurant.
+          schema:
+            $ref: '#/definitions/RestaurantDetail'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /addrestaurant:
+    post:
+      description: |
+        The add restaurant endpoint is used to adding new restaurants to database.
+      parameters:
+        - name: name
+          in: query
+          description: User's name of inserted restaurant, this name is displayed in restaurant list in web app.
+          required: true
+          type: string
+        - name: id
+          in: query
+          description: Restaurants's id from Zomato server.
+          required: true
+          type: number
+          format: integer
+      responses:
+        201:
+          description: Zomato id of created item.
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Returns zomato id of inserted restaurant.
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /updaterestaurant:
+    put:
+      description: The update restaurant endpoint is used to update name of restaurant added to database. This name is displayed in main page of web app in the list of restaurants.
+      parameters:
+        - name: id
+          in: query
+          description: Zomato ID of restaurant - identifier for restaurant update.
+          required: true
+          type: number
+          format: integer
+        - name: name
+          in: query
+          description: Value of name to update.
+          required: true
+          type: string
+      responses:
+        200:
+          description: Zomato id of updated item
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Returns zomato id of updated restaurant.
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Item to update not found
+          schema:
+            $ref: '#/definitions/Error'
+  /deleterestaurant:
+    delete:
+      description: The delete restaurant endpoint is used to delete restaurant from database by Zomato ID.
+      parameters:
+        - name: id
+          in: query
+          type: integer
+          description: Zomato id - identifier for delete.
+          required: true
+      responses:
+        204:
+          description: Item deleted and is not saved in database.
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /menu:
+    get:
+      description: The menu endpoint returns data daily menu of restaurant.
+      parameters:
+        - name: id
+          in: query
+          type: integer
+          description: Zomato id - identifier for find restaurant lunch menu.
+          required: true
+      responses:
+        200:
+          description: Daily lunch menu of restaurnat
+          schema:
+            $ref: '#/definitions/Menu'
+        404:
+          description: Restaurant with inserted zomato id was not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /findrestaurants:
+    get:
+      description: The find restaurant endpoint returns data about restaurants with corresponding name.
+      parameters:
+        - name: name
+          in: query
+          type: string
+          description: Restaurant name for search
+          required: true
+      responses:
+        200:
+          description: Data about restaurants
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RestaurantItem'
+        400:
+          description: Parameters were not inserted.
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+definitions:
+  RestaurantItem:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Zomato id identifier of restaurant.
+      name:
+        type: string
+        description: Name of restaurant
+      location:
+        $ref: '#/definitions/Location'
+  RestaurantDetail:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Unique identifier of restaurant, identifier from Zomato API.
+      name:
+        type: string
+        description: Restaurant name
+      distance:
+        type: string
+        description: Distance of restaurant related to inserted address - if address is not inserted, value equals "---".
+      location:
+        $ref: '#/definitions/Location'
+  Location:
+    type: object
+    properties:
+      zipcode:
+        type: string
+        description: Zip code of restaurant address.
+      address:
+        type: string
+        description: Street and number.
+      city:
+        type: string
+        description: Name of the city.
+      latitude:
+        type: number
+        format: double
+        description: Coordinates of the restaurant.
+      longitude:
+        type: number
+        format: double
+        description: Coordinates of the restaurant.
+      locality:
+        type: string
+        description: Name of the locality.
+      country_id:
+        type: number
+        format: integer
+        description: ID of the country.
+      city_id:
+        type: number
+        format: integer
+        description: PID of the city.
+  Menu:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Status of operation.
+      dishes:
+        type: array
+        items:
+          $ref: '#/definitions/Dish'
+        description: List of restaurant's menu details.
+  Dish:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Menu item title.
+      price:
+        type: string
+        description: Menu item price.
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+  Restaurant:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Internal ID of saved restaurant entity.
+      zomatoId:
+        type: number
+        format: integer
+        description: Unique identifier of restaurant received from Zomato API.
+      name:
+        type: string
+        description: User's name of restaurant, by default this name is same as in Zomato serice.
+      lastUpdated:
+        type: string
+        description: Timestamp of last database update.
+      dateCreated:
+        type: string
+        description: Timestamp of database insert operation.

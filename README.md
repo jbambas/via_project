@@ -7,3 +7,6 @@ Tato webová aplikace byla vytvořena za účelem získání zápočtu z předm�
 K implementaci aplikace byl použit webový framework Grails pro jazyk Groovy. Aplikace je distribuována ve formě souboru \*.war, který je možné nasadit na JSP aplikační server (Tomcat, Glassfish apod.). Klient pro potřeby testování vystaveného api je ve formě html stránky s JS. Vystavované api bude zdokumentováno pomocí nástroje Swagger.
 
 Tento popis je také dostupný v anglickém jazyce na Wiki projektu.
+
+
+http://semester-project.cftest.homeatcloud.cz/
