@@ -7,13 +7,13 @@ import grails.converters.JSON
 import org.grails.web.json.JSONObject
 
 class RestController {
-    static allowedMethods = [   addRestaurant:'POST',
-                                updateRestaurantName:'PUT',
-                                deleteRestaurantById:'DELETE',
-                                getRestaurants:'GET',
-                                getRestaurantByZomatoID:'GET',
-                                getLaunchMenu:'GET',
-                                getRestaurantsByName:'GET']
+    static allowedMethods = [   addRestaurant:['POST', 'OPTIONS'],
+                                updateRestaurantName:['PUT', 'OPTIONS'],
+                                deleteRestaurantById:['DELETE', 'OPTIONS'],
+                                getRestaurants:['GET', 'OPTIONS'],
+                                getRestaurantByZomatoID:['GET', 'OPTIONS'],
+                                getLaunchMenu:['GET', 'OPTIONS'],
+                                getRestaurantsByName:['GET', 'OPTIONS']]
 
     def addRestaurant(){
         def name = params.name
