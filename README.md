@@ -1,7 +1,7 @@
 # VIA project
 ## Lunch menu viewer
 
-Tato webová aplikace byla vytvořena za účelem získání zápočtu z předmětu Vývoj Internetových Aplikací (VIA) na FEL ČVUT. Jedná se o mashup aplikaci získávající aktuální denní jídelní menu pražských restaurací pomocí api portálu Zomato. Aplikace dále zobrazuje polohu restaurace pomocí Google maps JavaScript API. Aplikace dále umožňuje zadat aktuální adresu a pomocí Google Maps Geocoding API získat GPS souřadnice a vypočítat vzdálenost k dané restauraci. Seznam restaurací, ze kterých je možné získávat jídelní menu, bude uložen v lokální databázi aplikace. 
+Tato webová aplikace byla vytvořena za účelem získání zápočtu z předmětu Vývoj Internetových Aplikací (VIA) na FEL ČVUT. Jedná se o mashup aplikaci získávající aktuální denní jídelní menu pražských restaurací pomocí api portálu Zomato. Aplikace dále zobrazuje polohu restaurace pomocí Google maps JavaScript API. Aplikace dále umožňuje zadat aktuální adresu a pomocí Google Maps Geocoding API získat GPS souřadnice a vypočítat vzdálenost k dané restauraci. Seznam restaurací, ze kterých je možné získávat jídelní menu, je uložen v lokální databázi aplikace. 
 
 ## Využívané API
 * Google maps - https://developers.google.com/maps/documentation/javascript/adding-a-google-map
