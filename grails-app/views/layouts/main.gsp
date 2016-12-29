@@ -39,7 +39,9 @@
 
     <g:layoutBody/>
 
-    <div class="footer" role="contentinfo"></div>
+    <div class="footer text-center" role="contentinfo">
+        <p style="color: white">2016 - Jaroslav Bambas</p>
+    </div>
 
     <div id="spinner" class="spinner" style="display:none;">
         <g:message code="spinner.alt" default="Loading&hellip;"/>
