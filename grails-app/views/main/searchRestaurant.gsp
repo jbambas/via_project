@@ -6,6 +6,11 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 </head>
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        <li><g:link controller='logout'>Logout</g:link></li>
+    </ul>
+</div>
 <div class="container">
     <g:if test="${exception != null}">
         <p>${exception.message}</p>

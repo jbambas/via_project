@@ -6,6 +6,11 @@
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 </head>
 <body>
+<div class="nav" role="navigation">
+    <ul>
+        <li><g:link controller='logout'>Logout</g:link></li>
+    </ul>
+</div>
 <div class="container">
     <div class="col-md-6">
     <h1>Restaurant ${restaurantData.name}</h1>
